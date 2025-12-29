@@ -76,7 +76,7 @@ instance/
 *.sqlite
 
 # -------------------------
-# PyInstaller
+# PyeInstaller
 # -------------------------
 *.spec
 
