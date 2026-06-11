@@ -1,0 +1,51 @@
+# Environment
+.env
+.venv/
+venv/
+env/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg-info/
+dist/
+build/
+
+# ML Models (large files)
+ml/models/*.pkl
+ml/models/*.h5
+ml/models/*.pt
+ml/data/raw/
+
+# Database
+*.db
+*.db-shm
+*.db-wal
+*.db-journal
+*.sqlite3
+
+# Logs
+logs/
+
+# Node
+node_modules/
+frontend/node_modules/
+frontend/dist/
+frontend/.env.local
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Docker
+docker/volumes/
+
+# PCAP files
+uploads/*.pcap
+uploads/*.pcapng

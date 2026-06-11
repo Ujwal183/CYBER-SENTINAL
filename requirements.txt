@@ -1,0 +1,30 @@
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+# 🛡️ Cyber Sentinel - Dependencies
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+# Backend
+fastapi>=0.115.0
+uvicorn[standard]>=0.30.0
+pydantic>=2.9.0
+pydantic-settings>=2.5.0
+sqlalchemy>=2.0.35
+python-jose[cryptography]>=3.3.0
+bcrypt>=4.2.0
+passlib[bcrypt]>=1.7.4
+python-multipart>=0.0.9
+python-dotenv>=1.0.1
+psutil>=6.0.0
+
+# ML
+scikit-learn>=1.6.0
+numpy>=2.2.0
+pandas>=2.2.3
+xgboost>=2.1.0
+lightgbm>=4.5.0
+joblib>=1.4.0
+
+# Network (optional - for live packet capture)
+# scapy==2.5.0
+
+# WebSocket
+websockets==12.0

@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Cyber Sentinel - AI-Based Network Intrusion Detection & Mitigation System. Enterprise SOC Dashboard.">
+    <title>🛡️ Cyber Sentinel | AI Network Security</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="static/css/main.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛡️</text></svg>">
+</head>
+<body>
+    <!-- ═══════════ LOGIN SCREEN ═══════════ -->
+    <div id="login-screen" class="login-screen">
+        <div class="login-bg-grid"></div>
+        <div class="login-container">
+            <div class="login-card">
+                <div class="login-logo">
+                    <div class="shield-icon">🛡️</div>
+                    <h1>CYBER SENTINEL</h1>
+                    <p class="login-subtitle">AI-Powered Network Intrusion Detection</p>
+                </div>
+                <form id="login-form" autocomplete="off">
+                    <div class="input-group">
+                        <label for="login-username">Username</label>
+                        <input type="text" id="login-username" placeholder="Enter username" value="admin" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="login-password">Password</label>
+                        <input type="password" id="login-password" placeholder="Enter password" value="admin123" required>
+                    </div>
+                    <button type="submit" class="btn-login" id="btn-login">
+                        <span>Access Terminal</span>
+                        <div class="btn-glow"></div>
+                    </button>
+                    <div id="login-error" class="login-error"></div>
+                    <div class="login-toggle">
+                        <span>Don't have an account?</span>
+                        <a href="#" id="show-register" onclick="CyberSentinel.toggleRegister(event)">Create Account</a>
+                    </div>
+                </form>
+                <!-- Registration Form -->
+                <form id="register-form" class="hidden" autocomplete="off">
+                    <div class="input-group">
+                        <label for="reg-fullname">Full Name</label>
+                        <input type="text" id="reg-fullname" placeholder="Enter your full name">
+                    </div>
+                    <div class="input-group">
+                        <label for="reg-username">Username</label>
+                        <input type="text" id="reg-username" placeholder="Choose a username" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="reg-email">Email</label>
+                        <input type="email" id="reg-email" placeholder="Enter your email" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="reg-password">Password</label>
+                        <input type="password" id="reg-password" placeholder="Min 6 characters" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="reg-confirm">Confirm Password</label>
+                        <input type="password" id="reg-confirm" placeholder="Re-enter password" required>
+                    </div>
+                    <button type="submit" class="btn-login" id="btn-register">
+                        <span>Create Account</span>
+                        <div class="btn-glow"></div>
+                    </button>
+                    <div id="register-error" class="login-error"></div>
+                    <div class="login-toggle">
+                        <span>Already have an account?</span>
+                        <a href="#" id="show-login" onclick="CyberSentinel.toggleRegister(event)">Sign In</a>
+                    </div>
+                </form>
+                <div class="login-footer">
+                    <span class="status-dot"></span> System Operational | v3.0.0
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════ MAIN APP ═══════════ -->
+    <div id="app" class="app hidden">
+        <!-- Sidebar -->
+        <nav id="sidebar" class="sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-logo">🛡️</div>
+                <span class="sidebar-title">CYBER SENTINEL</span>
+            </div>
+            <ul class="nav-menu" id="nav-menu">
+                <li class="nav-item active" data-page="dashboard">
+                    <span class="nav-icon">📊</span><span class="nav-text">Dashboard</span>
+                </li>
+                <li class="nav-item" data-page="sysmonitor">
+                    <span class="nav-icon">💻</span><span class="nav-text">System Monitor</span>
+                </li>
+                <li class="nav-item" data-page="threats">
+                    <span class="nav-icon">🚨</span><span class="nav-text">Live Threats</span>
+                    <span class="nav-badge" id="threat-badge">0</span>
+                </li>
+                <li class="nav-item" data-page="blocked">
+                    <span class="nav-icon">🚫</span><span class="nav-text">Blocked IPs</span>
+                </li>
+                <li class="nav-item" data-page="incidents">
+                    <span class="nav-icon">📋</span><span class="nav-text">Incidents</span>
+                </li>
+                <li class="nav-item" data-page="models">
+                    <span class="nav-icon">🧠</span><span class="nav-text">AI Models</span>
+                </li>
+                <li class="nav-item" data-page="timeline">
+                    <span class="nav-icon">📈</span><span class="nav-text">Attack Timeline</span>
+                </li>
+                <li class="nav-item" data-page="chat">
+                    <span class="nav-icon">🤖</span><span class="nav-text">AI Assistant</span>
+                </li>
+                <li class="nav-item" data-page="logs">
+                    <span class="nav-icon">📜</span><span class="nav-text">Audit Logs</span>
+                </li>
+                <li class="nav-item" data-page="settings">
+                    <span class="nav-icon">⚙️</span><span class="nav-text">Settings</span>
+                </li>
+            </ul>
+            <div class="sidebar-footer">
+                <div class="user-info" id="user-info">
+                    <div class="user-avatar">A</div>
+                    <div class="user-details">
+                        <span class="user-name" id="display-username">Admin</span>
+                        <span class="user-role" id="display-role">Administrator</span>
+                    </div>
+                </div>
+                <button class="btn-logout" id="btn-logout" title="Logout">⏻</button>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Top Bar -->
+            <header class="topbar">
+                <div class="topbar-left">
+                    <button class="menu-toggle" id="menu-toggle">☰</button>
+                    <h2 class="page-title" id="page-title">SOC Dashboard</h2>
+                </div>
+                <div class="topbar-right">
+                    <div class="live-indicator" style="gap:8px">
+                        <span class="pulse-dot"></span>
+                        <span>LIVE</span>
+                        <span style="color:#00ff88;font-size:10px;border:1px solid #00ff88;padding:1px 6px;border-radius:4px;margin-left:4px;">REAL DATA</span>
+                    </div>
+                    <div class="topbar-time" id="topbar-time"></div>
+                    <button class="btn-icon" id="btn-simulate" title="Run Real System Scan">🔍</button>
+                    <button class="btn-icon" id="btn-export" title="Export CSV">📥</button>
+                </div>
+            </header>
+
+            <!-- Page Container -->
+            <div class="page-container" id="page-container">
+                <!-- Dashboard Page -->
+                <section id="page-dashboard" class="page active">
+                    <!-- Stats Cards -->
+                    <div class="stats-grid" id="stats-grid">
+                        <div class="stat-card stat-critical">
+                            <div class="stat-icon">🚨</div>
+                            <div class="stat-info">
+                                <span class="stat-value" id="stat-threats-today">0</span>
+                                <span class="stat-label">Threats Today</span>
+                            </div>
+                            <div class="stat-trend up" id="trend-threats">↑ 12%</div>
+                        </div>
+                        <div class="stat-card stat-warning">
+                            <div class="stat-icon">🌐</div>
+                            <div class="stat-info">
+                                <span class="stat-value" id="stat-packets">0</span>
+                                <span class="stat-label">Active Connections</span>
+                            </div>
+                        </div>
+                        <div class="stat-card stat-danger">
+                            <div class="stat-icon">🚫</div>
+                            <div class="stat-info">
+                                <span class="stat-value" id="stat-blocked">0</span>
+                                <span class="stat-label">Blocked IPs</span>
+                            </div>
+                        </div>
+                        <div class="stat-card stat-success">
+                            <div class="stat-icon">🧠</div>
+                            <div class="stat-info">
+                                <span class="stat-value" id="stat-accuracy">0%</span>
+                                <span class="stat-label">Model Accuracy</span>
+                            </div>
+                        </div>
+                        <div class="stat-card stat-info">
+                            <div class="stat-icon">🔥</div>
+                            <div class="stat-info">
+                                <span class="stat-value" id="stat-critical">0</span>
+                                <span class="stat-label">Critical Alerts</span>
+                            </div>
+                        </div>
+                        <div class="stat-card stat-mitigated">
+                            <div class="stat-icon">✅</div>
+                            <div class="stat-info">
+                                <span class="stat-value" id="stat-mitigated">0</span>
+                                <span class="stat-label">Mitigated Today</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Charts Row -->
+                    <div class="charts-grid">
+                        <div class="chart-card">
+                            <h3 class="chart-title">Weekly Threat Trend</h3>
+                            <canvas id="chart-weekly" height="250"></canvas>
+                        </div>
+                        <div class="chart-card">
+                            <h3 class="chart-title">Attack Categories</h3>
+                            <canvas id="chart-categories" height="250"></canvas>
+                        </div>
+                    </div>
+                    <div class="charts-grid">
+                        <div class="chart-card">
+                            <h3 class="chart-title">Severity Distribution</h3>
+                            <canvas id="chart-severity" height="250"></canvas>
+                        </div>
+                        <div class="chart-card">
+                            <h3 class="chart-title">Hourly Activity</h3>
+                            <canvas id="chart-hourly" height="250"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Recent Threats -->
+                    <div class="table-card">
+                        <div class="table-header">
+                            <h3>Recent Threats</h3>
+                            <button class="btn-sm" onclick="CyberSentinel.navigateTo('threats')">View All →</button>
+                        </div>
+                        <div class="table-scroll">
+                            <table class="data-table" id="recent-threats-table">
+                                <thead>
+                                    <tr>
+                                        <th>Time</th><th>Source IP</th><th>Attack Type</th>
+                                        <th>Severity</th><th>Confidence</th><th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="recent-threats-body"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- System Monitor Page -->
+                <section id="page-sysmonitor" class="page">
+                    <!-- Live Status Banner -->
+                    <div class="sm-status-banner">
+                        <div class="sm-banner-left">
+                            <div class="sm-banner-pulse"></div>
+                            <span class="sm-banner-label">SYSTEM HEALTH</span>
+                            <span class="sm-banner-status" id="sm-health-status">OPERATIONAL</span>
+                        </div>
+                        <div class="sm-banner-right">
+                            <div class="sm-banner-meta">
+                                <span id="sm-host-name">—</span>
+                                <span class="sm-sep">|</span>
+                                <span id="sm-os-name">—</span>
+                                <span class="sm-sep">|</span>
+                                <span>Uptime: <strong id="sm-uptime">—</strong></span>
+                            </div>
+                            <div class="sm-banner-time" id="sm-last-update">Last update: —</div>
+                        </div>
+                    </div>
+
+                    <!-- Primary Metrics — Large Gauge Cards -->
+                    <div class="sm-gauge-row">
+                        <div class="sm-gauge-card sm-card-cpu">
+                            <div class="sm-gauge-header">
+                                <div class="sm-gauge-icon">🖥️</div>
+                                <div class="sm-gauge-title">
+                                    <span>CPU</span>
+                                    <span class="sm-gauge-badge" id="sm-cpu-status">NORMAL</span>
+                                </div>
+                            </div>
+                            <div class="sm-gauge-body">
+                                <div class="sm-ring-wrap">
+                                    <svg viewBox="0 0 140 140" width="130" height="130" class="sm-ring-svg">
+                                        <defs>
+                                            <linearGradient id="grad-cpu" x1="0%" y1="0%" x2="100%" y2="0%">
+                                                <stop offset="0%" style="stop-color:#00f0ff"/>
+                                                <stop offset="100%" style="stop-color:#3b82f6"/>
+                                            </linearGradient>
+                                        </defs>
+                                        <circle class="sm-ring-bg" cx="70" cy="70" r="60"/>
+                                        <circle class="sm-ring-fill" cx="70" cy="70" r="60" id="sm-ring-cpu" stroke="url(#grad-cpu)"/>
+                                    </svg>
+                                    <div class="sm-ring-center">
+                                        <div class="sm-ring-val" id="sm-cpu-val">0%</div>
+                                        <div class="sm-ring-sub">usage</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="sm-gauge-footer">
+                                <div class="sm-mini-stat"><span>Cores</span><strong id="sm-cpu-cores">—</strong></div>
+                                <div class="sm-mini-stat"><span>Freq</span><strong id="sm-cpu-freq">—</strong></div>
+                            </div>
+                        </div>
+
+                        <div class="sm-gauge-card sm-card-ram">
+                            <div class="sm-gauge-header">
+                                <div class="sm-gauge-icon">💾</div>
+                                <div class="sm-gauge-title">
+                                    <span>Memory</span>
+                                    <span class="sm-gauge-badge" id="sm-ram-status">NORMAL</span>
+                                </div>
+                            </div>
+                            <div class="sm-gauge-body">
+                                <div class="sm-ring-wrap">
+                                    <svg viewBox="0 0 140 140" width="130" height="130" class="sm-ring-svg">
+                                        <defs>
+                                            <linearGradient id="grad-ram" x1="0%" y1="0%" x2="100%" y2="0%">
+                                                <stop offset="0%" style="stop-color:#a855f7"/>
+                                                <stop offset="100%" style="stop-color:#ec4899"/>
+                                            </linearGradient>
+                                        </defs>
+                                        <circle class="sm-ring-bg" cx="70" cy="70" r="60"/>
+                                        <circle class="sm-ring-fill" cx="70" cy="70" r="60" id="sm-ring-ram" stroke="url(#grad-ram)"/>
+                                    </svg>
+                                    <div class="sm-ring-center">
+                                        <div class="sm-ring-val" id="sm-ram-val">0%</div>
+                                        <div class="sm-ring-sub">used</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="sm-gauge-footer">
+                                <div class="sm-mini-stat"><span>Used</span><strong id="sm-ram-used">—</strong></div>
+                                <div class="sm-mini-stat"><span>Total</span><strong id="sm-ram-total">—</strong></div>
+                            </div>
+                        </div>
+
+                        <div class="sm-gauge-card sm-card-disk">
+                            <div class="sm-gauge-header">
+                                <div class="sm-gauge-icon">💿</div>
+                                <div class="sm-gauge-title">
+                                    <span>Disk</span>
+                                    <span class="sm-gauge-badge" id="sm-disk-status">NORMAL</span>
+                                </div>
+                            </div>
+                            <div class="sm-gauge-body">
+                                <div class="sm-ring-wrap">
+                                    <svg viewBox="0 0 140 140" width="130" height="130" class="sm-ring-svg">
+                                        <defs>
+                                            <linearGradient id="grad-disk" x1="0%" y1="0%" x2="100%" y2="0%">
+                                                <stop offset="0%" style="stop-color:#f97316"/>
+                                                <stop offset="100%" style="stop-color:#eab308"/>
+                                            </linearGradient>
+                                        </defs>
+                                        <circle class="sm-ring-bg" cx="70" cy="70" r="60"/>
+                                        <circle class="sm-ring-fill" cx="70" cy="70" r="60" id="sm-ring-disk" stroke="url(#grad-disk)"/>
+                                    </svg>
+                                    <div class="sm-ring-center">
+                                        <div class="sm-ring-val" id="sm-disk-val">0%</div>
+                                        <div class="sm-ring-sub">full</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="sm-gauge-footer">
+                                <div class="sm-mini-stat"><span>Used</span><strong id="sm-disk-used">—</strong></div>
+                                <div class="sm-mini-stat"><span>Total</span><strong id="sm-disk-total">—</strong></div>
+                            </div>
+                        </div>
+
+                        <div class="sm-gauge-card sm-card-net">
+                            <div class="sm-gauge-header">
+                                <div class="sm-gauge-icon">📡</div>
+                                <div class="sm-gauge-title">
+                                    <span>Network</span>
+                                    <span class="sm-gauge-badge" id="sm-net-status">ACTIVE</span>
+                                </div>
+                            </div>
+                            <div class="sm-gauge-body">
+                                <div class="sm-ring-wrap">
+                                    <svg viewBox="0 0 140 140" width="130" height="130" class="sm-ring-svg">
+                                        <defs>
+                                            <linearGradient id="grad-net" x1="0%" y1="0%" x2="100%" y2="0%">
+                                                <stop offset="0%" style="stop-color:#00ff88"/>
+                                                <stop offset="100%" style="stop-color:#22d3ee"/>
+                                            </linearGradient>
+                                        </defs>
+                                        <circle class="sm-ring-bg" cx="70" cy="70" r="60"/>
+                                        <circle class="sm-ring-fill" cx="70" cy="70" r="60" id="sm-ring-net" stroke="url(#grad-net)"/>
+                                    </svg>
+                                    <div class="sm-ring-center">
+                                        <div class="sm-ring-val" id="sm-net-val">0</div>
+                                        <div class="sm-ring-sub">conns</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="sm-gauge-footer">
+                                <div class="sm-mini-stat"><span>External</span><strong id="sm-net-ext">—</strong></div>
+                                <div class="sm-mini-stat"><span>Listening</span><strong id="sm-net-listen">—</strong></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Real-Time Charts -->
+                    <div class="charts-grid">
+                        <div class="chart-card sm-chart-card">
+                            <div class="sm-chart-header">
+                                <h3 class="chart-title">CPU Usage History</h3>
+                                <span class="sm-chart-live"><span class="sm-chart-dot"></span>LIVE</span>
+                            </div>
+                            <canvas id="chart-cpu-history" height="240"></canvas>
+                        </div>
+                        <div class="chart-card sm-chart-card">
+                            <div class="sm-chart-header">
+                                <h3 class="chart-title">Memory Usage History</h3>
+                                <span class="sm-chart-live"><span class="sm-chart-dot"></span>LIVE</span>
+                            </div>
+                            <canvas id="chart-ram-history" height="240"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Network Throughput Chart + Connection Stats -->
+                    <div class="charts-grid">
+                        <div class="chart-card sm-chart-card">
+                            <div class="sm-chart-header">
+                                <h3 class="chart-title">Network Throughput</h3>
+                                <span class="sm-chart-live"><span class="sm-chart-dot"></span>LIVE</span>
+                            </div>
+                            <canvas id="chart-net-throughput" height="240"></canvas>
+                        </div>
+                        <div class="sm-stats-panel">
+                            <div class="sm-stats-card">
+                                <div class="sm-stats-icon" style="background: rgba(0,240,255,0.12); color: var(--neon-cyan);">↑</div>
+                                <div class="sm-stats-detail">
+                                    <span class="sm-stats-label">Upload</span>
+                                    <span class="sm-stats-value" id="sm-io-sent">0 B</span>
+                                </div>
+                            </div>
+                            <div class="sm-stats-card">
+                                <div class="sm-stats-icon" style="background: rgba(168,85,247,0.12); color: var(--neon-purple);">↓</div>
+                                <div class="sm-stats-detail">
+                                    <span class="sm-stats-label">Download</span>
+                                    <span class="sm-stats-value" id="sm-io-recv">0 B</span>
+                                </div>
+                            </div>
+                            <div class="sm-stats-card">
+                                <div class="sm-stats-icon" style="background: rgba(0,255,136,0.12); color: var(--neon-green);">⚡</div>
+                                <div class="sm-stats-detail">
+                                    <span class="sm-stats-label">Packets In/Out</span>
+                                    <span class="sm-stats-value" id="sm-io-pkts">0 / 0</span>
+                                </div>
+                            </div>
+                            <div class="sm-stats-card">
+                                <div class="sm-stats-icon" style="background: rgba(239,68,68,0.12); color: var(--severity-critical);">⚠</div>
+                                <div class="sm-stats-detail">
+                                    <span class="sm-stats-label">Errors In/Out</span>
+                                    <span class="sm-stats-value" id="sm-io-errors">0 / 0</span>
+                                </div>
+                            </div>
+                            <div class="sm-stats-card">
+                                <div class="sm-stats-icon" style="background: rgba(59,130,246,0.12); color: var(--neon-blue);">🌐</div>
+                                <div class="sm-stats-detail">
+                                    <span class="sm-stats-label">Unique Remote IPs</span>
+                                    <span class="sm-stats-value" id="sm-unique-ips">0</span>
+                                </div>
+                            </div>
+                            <div class="sm-stats-card">
+                                <div class="sm-stats-icon" style="background: rgba(249,115,22,0.12); color: var(--neon-orange);">🔥</div>
+                                <div class="sm-stats-detail">
+                                    <span class="sm-stats-label">High-Risk Ports</span>
+                                    <span class="sm-stats-value" id="sm-highrisk">0</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Threats Page -->
+                <section id="page-threats" class="page">
+                    <div class="page-header">
+                        <h2>🚨 Live Threat Feed</h2>
+                        <div class="filter-bar">
+                            <select id="filter-severity" class="select-cyber">
+                                <option value="">All Severity</option>
+                                <option value="critical">Critical</option>
+                                <option value="high">High</option>
+                                <option value="medium">Medium</option>
+                                <option value="low">Low</option>
+                            </select>
+                            <select id="filter-attack" class="select-cyber">
+                                <option value="">All Types</option>
+                                <option value="DDoS">DDoS</option>
+                                <option value="Port Scan">Port Scan</option>
+                                <option value="Brute Force">Brute Force</option>
+                                <option value="Botnet">Botnet</option>
+                                <option value="SQL Injection">SQL Injection</option>
+                                <option value="Web Attack">Web Attack</option>
+                            </select>
+                            <button class="btn-primary" onclick="CyberSentinel.loadThreats()">Filter</button>
+                        </div>
+                    </div>
+                    <div class="table-card">
+                        <div class="table-scroll">
+                            <table class="data-table" id="threats-table">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th><th>Time</th><th>Source</th><th>Destination</th>
+                                        <th>Type</th><th>Severity</th><th>Score</th><th>Confidence</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="threats-body"></tbody>
+                            </table>
+                        </div>
+                        <div class="pagination" id="threats-pagination"></div>
+                    </div>
+                </section>
+
+                <!-- Blocked IPs Page -->
+                <section id="page-blocked" class="page">
+                    <div class="page-header">
+                        <h2>🚫 Blocked IP Center</h2>
+                        <button class="btn-primary" onclick="CyberSentinel.showBlockIPModal()">+ Block IP</button>
+                    </div>
+                    <div class="table-card">
+                        <table class="data-table">
+                            <thead><tr><th>IP Address</th><th>Reason</th><th>Blocked By</th><th>Threats</th><th>Blocked At</th><th>Actions</th></tr></thead>
+                            <tbody id="blocked-body"></tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <!-- Incidents Page -->
+                <section id="page-incidents" class="page">
+                    <div class="page-header">
+                        <h2>📋 Incident Response Center</h2>
+                        <button class="btn-primary" onclick="CyberSentinel.showIncidentModal()">+ New Incident</button>
+                    </div>
+                    <div class="table-card">
+                        <table class="data-table">
+                            <thead><tr><th>ID</th><th>Title</th><th>Severity</th><th>Status</th><th>Assigned To</th><th>Created</th></tr></thead>
+                            <tbody id="incidents-body"></tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <!-- AI Models Page -->
+                <section id="page-models" class="page">
+                    <div class="page-header"><h2>🧠 AI Model Insights</h2></div>
+                    <div class="models-grid" id="models-grid"></div>
+                    <div class="chart-card" style="margin-top:20px">
+                        <h3 class="chart-title">Feature Importance</h3>
+                        <canvas id="chart-features" height="300"></canvas>
+                    </div>
+                </section>
+
+                <!-- Timeline Page -->
+                <section id="page-timeline" class="page">
+                    <div class="page-header"><h2>📈 Attack Timeline</h2></div>
+                    <div class="chart-card">
+                        <canvas id="chart-timeline" height="400"></canvas>
+                    </div>
+                    <div class="timeline-feed" id="timeline-feed"></div>
+                </section>
+
+                <!-- AI Chat Page -->
+                <section id="page-chat" class="page">
+                    <div class="page-header"><h2>🤖 AI Security Assistant</h2></div>
+                    <div class="chat-container">
+                        <div class="chat-messages" id="chat-messages">
+                            <div class="chat-msg bot">
+                                <div class="chat-avatar">🤖</div>
+                                <div class="chat-bubble">Welcome to Cyber Sentinel AI Assistant. I can help you analyze threats, check system status, and provide security recommendations. What would you like to know?</div>
+                            </div>
+                        </div>
+                        <div class="chat-input-area">
+                            <input type="text" id="chat-input" placeholder="Ask about threats, system status, or security..." class="chat-input">
+                            <button class="btn-primary" onclick="CyberSentinel.sendChat()">Send</button>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Audit Logs Page -->
+                <section id="page-logs" class="page">
+                    <div class="page-header"><h2>📜 Audit Logs</h2></div>
+                    <div class="table-card">
+                        <table class="data-table">
+                            <thead><tr><th>Time</th><th>User</th><th>Action</th><th>Resource</th><th>Status</th></tr></thead>
+                            <tbody id="logs-body"></tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <!-- Settings Page -->
+                <section id="page-settings" class="page">
+                    <div class="page-header"><h2>⚙️ Settings</h2></div>
+                    <div class="settings-grid">
+                        <div class="settings-card">
+                            <h3>System Configuration</h3>
+                            <div class="setting-item"><label>Detection Threshold</label><input type="range" min="50" max="99" value="75" class="range-cyber" id="setting-threshold"><span id="threshold-val">75%</span></div>
+                            <div class="setting-item"><label>Auto-Mitigation</label><label class="toggle"><input type="checkbox" id="setting-auto-mitigate"><span class="toggle-slider"></span></label></div>
+                            <div class="setting-item"><label>Dry Run Mode</label><label class="toggle"><input type="checkbox" id="setting-dry-run" checked><span class="toggle-slider"></span></label></div>
+                            <div class="setting-item"><label>WebSocket Alerts</label><label class="toggle"><input type="checkbox" id="setting-ws" checked><span class="toggle-slider"></span></label></div>
+                        </div>
+                        <div class="settings-card">
+                            <h3>User Management</h3>
+                            <div class="users-list" id="users-list"></div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modal -->
+    <div id="modal-overlay" class="modal-overlay hidden">
+        <div class="modal-card" id="modal-card">
+            <div class="modal-header">
+                <h3 id="modal-title">Modal</h3>
+                <button class="modal-close" onclick="CyberSentinel.closeModal()">✕</button>
+            </div>
+            <div class="modal-body" id="modal-body"></div>
+        </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div id="toast-container" class="toast-container"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <script src="static/js/app.js"></script>
+</body>
+</html>
