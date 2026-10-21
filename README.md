@@ -82,4 +82,4 @@ This repository is an educational project. Run it only in a local or otherwise c
 
 ## License
 
-The repository includes an MIT license.
+No license file is currently included in this repository. Add one if you want to define reuse terms.
