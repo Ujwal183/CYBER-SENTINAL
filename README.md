@@ -1,154 +1,85 @@
-# 🛡️ Cyber Sentinel
+# Cyber Sentinel
 
-## AI-Based Network Intrusion Detection & Mitigation System
+A cybersecurity project that brings together a Python API, a browser dashboard, and machine-learning components to explore network-threat detection and incident workflows.
 
-> An enterprise-grade, AI-powered cybersecurity platform that detects, classifies, and mitigates network threats in real-time using machine learning ensemble models.
+## Project overview
 
----
+The application is organized into three main areas:
 
-## 🎯 Features
+- **Backend:** FastAPI endpoints, authentication, incident management, and threat operations
+- **ML:** Model training and prediction code for classifying network events
+- **Frontend:** A browser-based dashboard for reviewing alerts and security activity
 
-| Feature | Description |
-|---------|-------------|
-| **Real-Time Detection** | Live threat monitoring with WebSocket alerts |
-| **ML Classification** | Ensemble model (RF + XGBoost + LightGBM) for attack detection |
-| **Attack Types** | DDoS, Port Scan, Brute Force, Botnet, SQL Injection, Web Attack |
-| **Severity Scoring** | 0-100 severity score with confidence levels |
-| **Auto-Mitigation** | IP blocking, incident creation, with safe dry-run mode |
-| **SOC Dashboard** | Charts, analytics, threat timeline, heatmaps |
-| **AI Assistant** | Security chatbot for quick insights |
-| **RBAC** | Admin, Analyst, Viewer roles with JWT auth |
-| **Incident Response** | Create, track, and resolve security incidents |
-| **Audit Logging** | Complete action audit trail |
-| **CSV Export** | Export threat data for reporting |
-| **Docker Ready** | One-command deployment with Docker Compose |
+The repository also includes Docker Compose files, environment examples, and a test suite.
 
-## 🏗️ Architecture
+## Features
 
+- Threat event classification and severity scoring
+- Dashboard views for alerts, incidents, and activity
+- WebSocket alert updates
+- Incident tracking and CSV export
+- Role-based application access
+- Configurable IP-blocking workflow with a dry-run option
+- Docker Compose setup
+
+## Technology
+
+- Python and FastAPI
+- scikit-learn, XGBoost, and LightGBM
+- HTML, CSS, and JavaScript
+- SQLite by default, with database configuration support
+- Docker and Docker Compose
+
+## Run locally on Windows
+
+**Requirements:** Python 3.10+ and pip
+
+From the repository directory, run the included PowerShell launcher:
+
+```powershell
+.\run.ps1
 ```
-┌─────────────┐     ┌──────────────┐     ┌──────────────┐
-│   Frontend   │────▶│   FastAPI     │────▶│   ML Engine   │
-│  HTML/JS/CSS │◀────│   Backend     │◀────│  Ensemble     │
-│  Chart.js    │     │  WebSocket    │     │  RF+XGB+LGBM  │
-└─────────────┘     └──────┬───────┘     └──────────────┘
-                           │
-                    ┌──────┴───────┐
-                    │   SQLite/    │
-                    │  PostgreSQL  │
-                    └──────────────┘
-```
 
-## 🚀 Quick Start
+The launcher creates a virtual environment, installs dependencies when needed, and starts the application. Then open [http://localhost:8000](http://localhost:8000). The API documentation is available at [http://localhost:8000/docs](http://localhost:8000/docs).
 
-### Prerequisites
-- Python 3.10+
-- pip
+For a manual setup:
 
-### 1. Install Dependencies
-```bash
-cd "Cyber Sentinel project"
+```powershell
+python -m venv .venv
+.\.venv\Scripts\Activate.ps1
 pip install -r requirements.txt
-```
-
-### 2. Train ML Model
-```bash
-python -m ml.train_model
-```
-
-### 3. Start Server
-```bash
 python -m backend.app
 ```
 
-### 4. Open Dashboard
-Navigate to **http://localhost:8000** in your browser.
-
-**Default Credentials:**
-| Role | Username | Password |
-|------|----------|----------|
-| Admin | admin | admin123 |
-| Analyst | analyst | analyst123 |
-| Viewer | viewer | viewer123 |
-
-## 📁 Project Structure
-
-```
-Cyber Sentinel project/
-├── backend/
-│   ├── api/           # REST API routes
-│   ├── core/          # Config, database, security
-│   ├── models/        # SQLAlchemy ORM models
-│   ├── schemas/       # Pydantic validation schemas
-│   ├── services/      # Business logic & threat engine
-│   └── app.py         # FastAPI entry point
-├── frontend/
-│   ├── index.html     # SPA dashboard
-│   └── static/
-│       ├── css/       # Dark cybersecurity theme
-│       └── js/        # Frontend application logic
-├── ml/
-│   ├── train_model.py # Training pipeline
-│   ├── predictor.py   # Prediction engine
-│   ├── models/        # Saved model artifacts
-│   └── data/          # Training datasets
-├── tests/             # Test suite
-├── docker/            # Nginx config
-├── Dockerfile
-├── docker-compose.yml
-├── requirements.txt
-└── .env
-```
-
-## 📌 API Endpoints
-
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| POST | `/api/v1/auth/login` | User login |
-| POST | `/api/v1/auth/register` | User registration |
-| GET | `/api/v1/auth/me` | Current user info |
-| GET | `/api/v1/dashboard/stats` | Dashboard analytics |
-| GET | `/api/v1/threats` | List threats (paginated) |
-| GET | `/api/v1/threats/live` | Recent live threats |
-| POST | `/api/v1/block/ip` | Block an IP address |
-| GET | `/api/v1/blocked-ips` | List blocked IPs |
-| POST | `/api/v1/incidents` | Create incident |
-| GET | `/api/v1/incidents` | List incidents |
-| GET | `/api/v1/models/performance` | ML model metrics |
-| POST | `/api/v1/simulate/threat` | Simulate a threat |
-| GET | `/api/v1/chat` | AI security assistant |
-| GET | `/api/v1/audit-logs` | Audit log history |
-| WS | `/ws/alerts` | Real-time WebSocket alerts |
-
-## 🧠 ML Models
-
-| Model | Role |
-|-------|------|
-| Random Forest | Primary classifier |
-| XGBoost | Gradient boosting classifier |
-| LightGBM | Fast gradient boosting |
-| Isolation Forest | Anomaly detection |
-| **Ensemble Hybrid** | Soft-voting combination of all |
-
-**Metrics tracked:** Accuracy, Precision, Recall, F1-Score, ROC AUC, Confusion Matrix
-
-## 🐳 Docker Deployment
+## Run with Docker
 
 ```bash
-docker-compose up --build -d
+docker compose up --build
 ```
 
-Access at http://localhost (nginx) or http://localhost:8000 (direct).
+The Compose configuration exposes the application on port 8000 and the Nginx service on port 80.
 
-## 🧪 Testing
+## Tests
 
 ```bash
 pytest tests/ -v
 ```
 
-## 📄 License
+## Project structure
 
-MIT License - Built for academic and research purposes.
+```text
+backend/       FastAPI application, API routes, models, and services
+frontend/      Dashboard assets
+ml/            Model training and prediction code
+tests/         Automated tests
+docker/        Nginx configuration
+.env.example   Example environment configuration
+```
 
-## 👤 Author
+## Security and scope
 
-Cyber Sentinel Project Team
+This repository is an educational project. Run it only in a local or otherwise controlled environment. It is not a production intrusion-detection service. Before any deployment, replace example secrets and credentials, review authentication and network exposure, and keep IP-blocking actions in dry-run mode until they have been tested in an authorized environment. Never use it against systems you do not own or have permission to assess.
+
+## License
+
+The repository includes an MIT license.
